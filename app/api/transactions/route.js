@@ -10,7 +10,8 @@ export async function GET() {
     
     return Response.json(transactions)
   } catch (error) {
-    return Response.json({ error: 'Something went wrong' }, { status: 500 })
+    console.error('GET /api/transactions error:', error)
+    return Response.json({ error: 'Something went wrong', details: error.message }, { status: 500 })
   }
 }
 
@@ -39,7 +40,8 @@ export async function POST(request) {
     
     return Response.json({ message: 'Transaction added!' })
   } catch (error) {
-    return Response.json({ error: 'Could not save transaction' }, { status: 500 })
+    console.error('POST /api/transactions error:', error)
+    return Response.json({ error: 'Could not save transaction', details: error.message }, { status: 500 })
   }
 }
 
@@ -60,6 +62,7 @@ export async function DELETE(request) {
     
     return Response.json({ message: 'Deleted!' })
   } catch (error) {
-    return Response.json({ error: 'Could not delete' }, { status: 500 })
+    console.error('DELETE /api/transactions error:', error)
+    return Response.json({ error: 'Could not delete', details: error.message }, { status: 500 })
   }
 }
