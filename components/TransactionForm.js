@@ -49,7 +49,7 @@ export default function TransactionForm({ onTransactionAdded }) {
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <Label>Amount ($)</Label>
+            <Label>Amount (₹)</Label>
             <Input
               type="number"
               value={amount}

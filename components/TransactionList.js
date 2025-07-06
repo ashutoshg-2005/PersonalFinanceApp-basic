@@ -55,7 +55,7 @@ export default function TransactionList({ transactions, onDelete, loading }) {
                   </p>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="font-bold">${transaction.amount}</span>
+                  <span className="font-bold">₹{transaction.amount}</span>
                   <Button 
                     size="sm" 
                     variant="outline"
