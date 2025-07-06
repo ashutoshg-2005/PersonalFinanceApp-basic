@@ -1,36 +1,43 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Personal Finance Tracker
 
-## Getting Started
+A simple web app to track your money - add transactions and see where your money goes!
 
-First, run the development server:
+## What it does
+
+- ✅ Add new transactions (amount, description, date)
+- ✅ View all your transactions
+- ✅ Delete transactions you don't need
+- ✅ Shows newest transactions first
+
+## How to run it
+
+1. Install stuff:
+
+```bash
+npm install
+```
+
+2. Start the app:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+3. Open your browser and go to: http://localhost:3000
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## What you need
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- Node.js installed on your computer
+- MongoDB database (for storing transactions)
 
-## Learn More
+## Files that matter
 
-To learn more about Next.js, take a look at the following resources:
+- `app/page.js` - The main page you see
+- `app/api/transactions/route.js` - Handles saving/getting/deleting transactions
+- `components/` - Reusable parts like forms and lists
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## How it works
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Built with Next.js (a React framework)
+- Uses MongoDB to store your transactions
+- Simple API that handles GET, POST, and DELETE requests
