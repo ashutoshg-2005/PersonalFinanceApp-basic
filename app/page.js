@@ -3,7 +3,10 @@
 import { useState, useEffect } from 'react'
 import TransactionForm from '@/components/TransactionForm'
 import TransactionList from '@/components/TransactionList'
-import MonthlyChart from '@/components/MonthlyChart'
+import CategoryChart from '@/components/CategoryChart'
+import Dashboard from '@/components/Dashboard'
+import BudgetTracker from '@/components/BudgetTracker'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 
 export default function Home() {
   const [transactions, setTransactions] = useState([])
@@ -40,22 +43,33 @@ export default function Home() {
           <p className="text-gray-600 mt-2">Track your expenses and manage your budget</p>
         </header>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <div className="space-y-6">
-            <TransactionForm 
-              onTransactionAdded={handleNewTransaction}
-            />
-            
-            <TransactionList 
-              transactions={transactions}
-              onDelete={handleDelete}
-            />
-          </div>
-          
-          <div>
-            <MonthlyChart transactions={transactions} />
-          </div>
-        </div>
+        <Tabs defaultValue="dashboard" className="space-y-6">
+          <TabsList className="grid w-full grid-cols-4">
+            <TabsTrigger value="dashboard">Dashboard</TabsTrigger>
+            <TabsTrigger value="transactions">Transactions</TabsTrigger>
+            <TabsTrigger value="categories">Categories</TabsTrigger>
+            <TabsTrigger value="budget">Budget</TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="dashboard" className="space-y-6">
+            <Dashboard transactions={transactions} />
+          </TabsContent>
+
+          <TabsContent value="transactions" className="space-y-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <TransactionForm onTransactionAdded={handleNewTransaction} />
+              <TransactionList transactions={transactions} onDelete={handleDelete} />
+            </div>
+          </TabsContent>
+
+          <TabsContent value="categories" className="space-y-6">
+            <CategoryChart transactions={transactions} />
+          </TabsContent>
+
+          <TabsContent value="budget" className="space-y-6">
+            <BudgetTracker transactions={transactions} />
+          </TabsContent>
+        </Tabs>
       </div>
     </div>
   )

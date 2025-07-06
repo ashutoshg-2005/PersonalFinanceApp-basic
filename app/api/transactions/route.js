@@ -18,10 +18,10 @@ export async function GET() {
 // Add new transaction
 export async function POST(request) {
   try {
-    const { amount, description, date } = await request.json()
+    const { amount, description, date, category } = await request.json()
     
     // Check if all fields are filled
-    if (!amount || !description || !date) {
+    if (!amount || !description || !date || !category) {
       return Response.json({ error: 'Please fill all fields' }, { status: 400 })
     }
     
@@ -33,6 +33,7 @@ export async function POST(request) {
       amount: Number(amount),
       description,
       date: new Date(date),
+      category,
       createdAt: new Date()
     }
     
@@ -64,5 +65,41 @@ export async function DELETE(request) {
   } catch (error) {
     console.error('DELETE /api/transactions error:', error)
     return Response.json({ error: 'Could not delete', details: error.message }, { status: 500 })
+  }
+}
+
+// Edit transaction
+export async function PATCH(request) {
+  try {
+    const { id, amount, description, date, category } = await request.json()
+    
+    if (!id) {
+      return Response.json({ error: 'Transaction ID required' }, { status: 400 })
+    }
+    
+    if (!amount || !description || !date || !category) {
+      return Response.json({ error: 'Please fill all fields' }, { status: 400 })
+    }
+    
+    const client = await clientPromise
+    const db = client.db('personalfin')
+    
+    const updatedTransaction = {
+      amount: Number(amount),
+      description,
+      date: new Date(date),
+      category,
+      updatedAt: new Date()
+    }
+    
+    await db.collection('transactions').updateOne(
+      { _id: new ObjectId(id) },
+      { $set: updatedTransaction }
+    )
+    
+    return Response.json({ message: 'Transaction updated!' })
+  } catch (error) {
+    console.error('PATCH /api/transactions error:', error)
+    return Response.json({ error: 'Could not update transaction', details: error.message }, { status: 500 })
   }
 }

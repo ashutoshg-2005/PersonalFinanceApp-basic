@@ -5,17 +5,31 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 
 export default function TransactionForm({ onTransactionAdded }) {
   const [amount, setAmount] = useState('')
   const [description, setDescription] = useState('')
   const [date, setDate] = useState(new Date().toISOString().split('T')[0])
+  const [category, setCategory] = useState('')
+
+  // Simple categories for beginners
+  const categories = [
+    'Food & Dining',
+    'Shopping',
+    'Transportation',
+    'Entertainment',
+    'Bills & Utilities',
+    'Healthcare',
+    'Education',
+    'Other'
+  ]
 
   const handleSubmit = async (e) => {
     e.preventDefault()
     
     // Simple validation
-    if (!amount || !description) {
+    if (!amount || !description || !category) {
       alert('Please fill all fields')
       return
     }
@@ -24,7 +38,7 @@ export default function TransactionForm({ onTransactionAdded }) {
       const response = await fetch('/api/transactions', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ amount, description, date }),
+        body: JSON.stringify({ amount, description, date, category }),
       })
       
       if (response.ok) {
@@ -32,6 +46,7 @@ export default function TransactionForm({ onTransactionAdded }) {
         setAmount('')
         setDescription('')
         setDate(new Date().toISOString().split('T')[0])
+        setCategory('')
         onTransactionAdded()
       } else {
         alert('Failed to add transaction')
@@ -75,6 +90,22 @@ export default function TransactionForm({ onTransactionAdded }) {
               value={date}
               onChange={(e) => setDate(e.target.value)}
             />
+          </div>
+
+          <div>
+            <Label>Category</Label>
+            <Select value={category} onValueChange={setCategory}>
+              <SelectTrigger>
+                <SelectValue placeholder="Choose category" />
+              </SelectTrigger>
+              <SelectContent>
+                {categories.map((cat) => (
+                  <SelectItem key={cat} value={cat}>
+                    {cat}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
           
           <Button type="submit">Add Transaction</Button>
